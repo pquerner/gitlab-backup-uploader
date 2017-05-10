@@ -1,5 +1,5 @@
 ## Gitlab Backup Uploader
-#### Script to upload Gitlab backups to Google Drive
+#### Script to upload Gitlab backups to Google Drive for Linux systems
 
 --------
 
@@ -14,10 +14,11 @@ git clone https://github.com/Syonet/gitlab-backup-uploader.git
 
 I recommend using this uploader via `git clone` instead of downloading, so you can benefit from automatic update scripts.
 
-Download the [Google Drive CLI](https://github.com/prasmussen/gdrive#installation). To use the version 1.5.1 (for Linux 64bits):
+Download and install the [Google Drive CLI](https://github.com/prasmussen/gdrive) for your system.
+This has been tested with version 2.1.0 Linux x64 (Ubuntu).
 
 ```
-wget https://drive.google.com/uc?id=0B3X9GlR6EmbndFBkTWllLWxEVWM -O drive
+wget https://docs.google.com/uc?id=0B3X9GlR6EmbnQ0FtZmJJUXEyRTA -O drive
 chmod a+x drive
 sudo mv /home/git/drive /usr/bin/
 ```
@@ -46,14 +47,14 @@ Make a copy of the example configuration file:
 
 ```
 cd /home/git/gitlab-backup-uploader/conf
-cp upload.cfg.exemplo upload.cfg
+cp upload.cfg.example upload.cfg
 ```
 
 Edit `upload.cfg`, and change the following items:
 
 * The parameter `GITLAB_BACKUPS` with the full path of the GitLab backup directory.
-* The parameter `GDRIVE_DIRETORIO` with the Google Drive directory ID that will receive the backup files. 
-* The parameter `UPLOAD_COMPACTADO` to decide whether the backup will be compressed prior to upload.
+* The parameter `GDRIVE_DIRECTORY_ID` with the Google Drive directory ID that will receive the backup files. 
+* The parameter `UPLOAD_COMPRESS_FILE` to decide whether the backup will be compressed prior to upload.
 
 Then just put the upload script in crontab (com `crontab -e`):
 
