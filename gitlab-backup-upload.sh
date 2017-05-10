@@ -7,8 +7,24 @@ UPLOAD_HOME=`pwd -P`
 popd > /dev/null
 
 cd $UPLOAD_HOME
+#Test is cfg file exists
+if [ ! -f ./conf/upload.cfg ]; then
+    echo "upload.cfg file not found! Please read instructions (README.md)."
+    exit 1
+fi
+
 source ./conf/upload.cfg
 source ./conf/version.cfg
+
+if [ -z ${GITLAB_BACKUPS} ]; then
+    echo "  => ERROR: GITLAB_BACKUPS is unset. Please configure GITLAB_BACKUPS in upload.cfg."
+    exit 1
+fi
+
+if [ -z ${GDRIVE_DIRECTORY_ID} ]; then
+    echo "  => ERROR: GDRIVE_DIRECTORY_ID is unset. Please configure GDRIVE_DIRECTORY_ID in upload.cfg.";
+    exit 1
+fi
 
 clear
 
@@ -83,5 +99,5 @@ echo "Removing local file $UPLOAD_ARCHIV_NAME..."
 rm $UPLOAD_ARCHIV_NAME
 
 echo
-echo "Done. End of upload script."
+echo "Done. End of upload script at `date`"
 echo
