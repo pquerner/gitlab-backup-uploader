@@ -6,7 +6,7 @@
 GITLAB_BACKUPS=""
 
 # Google Drive's Directory ID
-GDRIVE_DIRETORIO=""
+GDRIVE_DIRECTORY_ID=""
 
 # Define if the backup file will be compressed before the upload.
-UPLOAD_COMPACTADO=true
+UPLOAD_COMPRESS_FILE=true
