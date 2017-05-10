@@ -47,10 +47,10 @@ fi
 # Upload the file to Google Drive
 echo "Uploading file $UPLOAD_ARCHIV_NAME..."
 
-GDRIVE_RETURNINFO=$(drive upload -f $UPLOAD_ARCHIV_NAME -p $GDRIVE_DIRECTORY_ID)
+GDRIVE_RETURNINFO=$(drive upload $UPLOAD_ARCHIV_NAME --parent $GDRIVE_DIRECTORY_ID)
 
-GDRIVE_UPLOADED_FILE_ID=$(echo $GDRIVE_RETURNINFO |cut -d" " -f2)
-GDRIVE_ARCHIV_NAME=$(echo $GDRIVE_RETURNINFO |cut -d" " -f4)
+GDRIVE_ARCHIV_NAME=$(echo $GDRIVE_RETURNINFO |cut -d" " -f2)
+GDRIVE_UPLOADED_FILE_ID=$(echo $GDRIVE_RETURNINFO |cut -d" " -f4)
 
 echo "  => ID  : $GDRIVE_UPLOADED_FILE_ID"
 echo "  => File: $GDRIVE_ARCHIV_NAME"
@@ -63,7 +63,7 @@ then
   echo "Removing previous file..."
   echo "  => ID: $GDRIVE_OLD_FILE_ID"
 
-  drive delete --id $GDRIVE_OLD_FILE_ID
+  drive delete $GDRIVE_OLD_FILE_ID
 
 else
   echo
