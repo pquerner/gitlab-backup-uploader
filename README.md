@@ -9,7 +9,7 @@ Make a repository copy to the GitLab `home` directory.
 
 ```
 cd /home/git
-git clone https://github.com/Syonet/gitlab-backup-uploader.git
+git clone https://github.com/pquerner/gitlab-backup-uploader.git
 ```
 
 I recommend using this uploader via `git clone` instead of downloading, so you can benefit from automatic update scripts.
@@ -60,7 +60,20 @@ Then just put the upload script in crontab (com `crontab -e`):
 
 ```
 # Upload the latest GitLab backup to Google Drive at 10pm.
-0 22 * * * /home/git/gitlab-backup-uploader/upload.sh 1> /home/git/gitlab-backup-uploader/log/cron.log 2>&1
+0 22 * * * /home/git/gitlab-backup-uploader/gitlab-backup-upload.sh 1> /home/git/gitlab-backup-uploader/log/cron.log 2>&1
+```
+
+### Parameters
+
+The shell script "gitlab-backup-upload" accepts the following optional parameters:
+
+```
+-c = Configuration file to use. Defaults to /conf/upload.cfg
+Reason:
+    If you save your /etc/gitlab directory from a cronjob for instance, you can save it with this script also.
+    (Example cronjob : tar cfz /var/opt/gitlab/backups/opt/$(date "+opt-gitlab-%s.tgz") -C / opt/gitlab)
+-d = Dry-run mode. Does not actually do anything but shows what would be done. Good for testing.
+-k = Keep old uploaded file. Normally this script deletes the last uploaded file uploaded to your GDrive account. This parameters prevents that action.
 ```
 
 _____
