@@ -103,6 +103,7 @@ echo
 # The GitLab backup files are only grouped with .tar
 # So, we need to copy the file and compress it, 
 # before send it to Google Drive.
+# Optionally, if set by user, we will encrypt the file with GPG first.
 echo "Copying file..."
 if [ "$DRYRUN" = true ]; then
         echo "cp $UPLOAD_ARCHIV ."
@@ -124,6 +125,27 @@ if test "$UPLOAD_COMPRESS_FILE" = true; then
     UPLOAD_ARCHIV_NAME=$UPLOAD_ARCHIV_NAME.bz2
 else
     echo "  => Warning: the backup will not be compressed by uploader."
+fi
+
+# Test if user wants to encrypt the file first
+if test "$ENCRYPT_FILE" = true; then
+    # Test is password file exists and is readable
+    if [ ! -f $ENCRYPT_PASSWORD_FILE  ] || [ ! -r $ENCRYPT_PASSWORD_FILE ]; then
+        echo "$ENCRYPT_PASSWORD_FILE file not found or not readable! Please read instructions (README.md)."
+        exit 1
+    fi
+    echo "Compressing file $UPLOAD_ARCHIV_NAME..."
+    if [ "$DRYRUN" = true ]; then
+        echo "gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-file $ENCRYPT_PASSWORD_FILE --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1"
+    else
+        gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-file $ENCRYPT_PASSWORD_FILE --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1
+    fi
+
+    # Update variables, to keep the correct names and paths.
+    UPLOAD_ARCHIV=$UPLOAD_HOME/$UPLOAD_ARCHIV_NAME.gpg
+    UPLOAD_ARCHIV_NAME=$UPLOAD_ARCHIV_NAME.gpg
+else
+    echo "  => Warning: the backup will not be encrypted by uploader."
 fi
 
 # Upload the file to Google Drive

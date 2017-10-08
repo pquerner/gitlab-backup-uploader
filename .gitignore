@@ -1,3 +1,5 @@
 
 \.idea/
-/conf/dev.cfg
+/conf/*
+!/conf/upload.cfg.example
+!/conf/version.cfg

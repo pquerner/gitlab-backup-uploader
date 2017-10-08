@@ -55,6 +55,8 @@ Edit `upload.cfg`, and change the following items:
 * The parameter `GITLAB_BACKUPS` with the full path of the GitLab backup directory.
 * The parameter `GDRIVE_DIRECTORY_ID` with the Google Drive directory ID that will receive the backup files. 
 * The parameter `UPLOAD_COMPRESS_FILE` to decide whether the backup will be compressed prior to upload.
+* The parameter `ENCRYPT_FILE` to decide whether the backup will be encrypted prior to upload.
+* The parameter `ENCRYPT_PASSWORD_FILE` to the file which holds the private password for GPG to use (plaintext). Keep this file safe!
 
 Then just put the upload script in crontab (com `crontab -e`):
 
@@ -75,6 +77,22 @@ Reason:
 -d = Dry-run mode. Does not actually do anything but shows what would be done. Good for testing.
 -k = Keep old uploaded file. Normally this script deletes the last uploaded file uploaded to your GDrive account. This parameters prevents that action.
 ```
+
+### Update
+
+Check if any new configuration variables exists in ```conf/upload.cfg.exmaple```
+and if there is, add them to your existing configuration file.
+
+### Changelog
+
+#####initial to "v0.1.12"
+refer to git log
+
+#####"v0.1.12" to "v0.1.13"
+Added GPG encryption of backup file.  
+_This version added a new configuration variable to the configuration file_
+
+#
 
 _____
 

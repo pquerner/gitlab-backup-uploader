@@ -2,11 +2,18 @@
 # Upload script configuration file
 #
 
-# Directory of GitLab backup files
+# Directory of GitLab backup files (full path to backups directory)
 GITLAB_BACKUPS=""
 
-# Google Drive's Directory ID
+# Google Drive's Directory ID (numeric as string)
 GDRIVE_DIRECTORY_ID=""
 
-# Define if the backup file will be compressed before the upload.
+# Define if the backup file will be compressed before the upload. (false | true)
 UPLOAD_COMPRESS_FILE=true
+
+# Whether or not to encrypt the file before transferring (false | true)
+ENCRYPT_FILE=false
+
+# Full path to password file. Best to keep it safe and only readable by current (or cronjob) user
+# (can be empty, will only be checked if ENCRYPT_FILE is true)
+ENCRYPT_PASSWORD_FILE="/path/to/password/file"
