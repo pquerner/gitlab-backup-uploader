@@ -136,9 +136,9 @@ if test "$ENCRYPT_FILE" = true; then
     fi
     echo "Encrypting file $UPLOAD_ARCHIV_NAME..."
     if [ "$DRYRUN" = true ]; then
-        echo "gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-file $ENCRYPT_PASSWORD_FILE --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1"
+        echo "sed -n '1p' $ENCRYPT_PASSWORD_FILE | gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-fd 0 --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1"
     else
-        gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-file $ENCRYPT_PASSWORD_FILE --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1
+        sed -n '1p' $ENCRYPT_PASSWORD_FILE | gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-fd 0 --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1
     fi
 
     # Update variables, to keep the correct names and paths.
