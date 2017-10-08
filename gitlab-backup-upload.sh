@@ -134,7 +134,7 @@ if test "$ENCRYPT_FILE" = true; then
         echo "$ENCRYPT_PASSWORD_FILE file not found or not readable! Please read instructions (README.md)."
         exit 1
     fi
-    echo "Compressing file $UPLOAD_ARCHIV_NAME..."
+    echo "Encrypting file $UPLOAD_ARCHIV_NAME..."
     if [ "$DRYRUN" = true ]; then
         echo "gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-file $ENCRYPT_PASSWORD_FILE --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1"
     else
