@@ -150,6 +150,11 @@ else
     echo "  => Warning: the backup will not be encrypted by uploader."
 fi
 
+# Check again if file exists (specially after GPG)
+if [ ! -f $UPLOAD_ARCHIV  ] || [ ! -r $UPLOAD_ARCHIV ]; then
+    echo "$UPLOAD_ARCHIV file not found or not readable! Please read instructions (README.md)."
+    exit 1
+fi
 # Upload the file to Google Drive
 echo "Uploading file $UPLOAD_ARCHIV_NAME..."
 if [ "$DRYRUN" = true ]; then
