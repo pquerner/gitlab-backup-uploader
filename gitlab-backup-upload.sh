@@ -139,6 +139,8 @@ if test "$ENCRYPT_FILE" = true; then
         echo "sed -n '1p' $ENCRYPT_PASSWORD_FILE | gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-fd 0 --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1"
     else
         sed -n '1p' $ENCRYPT_PASSWORD_FILE | gpg --no-tty -vv --exit-on-status-write-error --batch --passphrase-fd 0 --cipher-algo AES256 --symmetric $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME > ./log/error.log 2>&1
+        # Delete old (unencrypted) file
+        rm $UPLOAD_HOME/$UPLOAD_ARCHIV_NAME
     fi
 
     # Update variables, to keep the correct names and paths.
