@@ -93,8 +93,8 @@ if [ "$DRYRUN" = true ]; then
         UPLOAD_ARCHIV="IDONTEXISTS.tar.gz"
         UPLOAD_ARCHIV_NAME=$(basename $UPLOAD_ARCHIV)
     else
-        UPLOAD_ARCHIV=$(ls -dt $GITLAB_BACKUPS/* | head -1)
-        UPLOAD_ARCHIV_NAME=$(basename $UPLOAD_ARCHIV)
+	UPLOAD_ARCHIV=$(find $GITLAB_BACKUPS -name "*.tar" -type f -printf "%T@ %p\n" | sort -n | cut -d' ' -f 2- | tail -n 1)
+	UPLOAD_ARCHIV_NAME=$(basename $UPLOAD_ARCHIV)
 fi
 
 echo "File to upload: $UPLOAD_ARCHIV"
